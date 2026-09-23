@@ -5,7 +5,6 @@ djangorestframework
 psycopg2-binary
 djangorestframework-simplejwt
 django-cors-headers
-boto3  # optional for S3
 daphne
 dj-database-url
 python-dotenv
