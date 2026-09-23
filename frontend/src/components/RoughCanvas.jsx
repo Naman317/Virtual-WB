@@ -486,7 +486,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
 
     if (ws?.readyState === WebSocket.OPEN) {
       const now = performance.now();
-      if (now - lastCursorSyncRef.current > 50) { // Limit to 20 updates a second
+      if (now - lastCursorSyncRef.current > 100) { // Limit to 10 updates a second
         ws.send(JSON.stringify({ type: "cursor_move", payload: { x: vX, y: vY, color, laser: tool === 'laser' && isDrawing } }));
         
         // Broadcast live drawing progress to others without hitting the DB
