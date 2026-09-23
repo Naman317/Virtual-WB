@@ -75,7 +75,8 @@ export default function Room() {
 
   const connectWS = (roomSlug) => {
     const token = localStorage.getItem("access_token");
-    const wsUrl = `ws://localhost:8000/ws/room/${roomSlug}/?token=${token}`;
+    const wsBase = import.meta.env.VITE_WS_BASE || "ws://localhost:8000";
+    const wsUrl = `${wsBase}/ws/room/${roomSlug}/?token=${token}`;
     wsRef.current = new WebSocket(wsUrl);
 
     wsRef.current.onopen = () => {
