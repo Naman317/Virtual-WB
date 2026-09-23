@@ -24,6 +24,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
   } = useSceneStore();
 
   const [currentElement, setCurrentElement] = useState(null);
+  const currentElementRef = useRef(null);
   const [liveDraws, setLiveDraws] = useState({});
 
   // Dragging and Navigation States
@@ -448,6 +449,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
     const id = `${username}-${Date.now()}`;
     const seed = Math.floor(Math.random() * 2147483648);
     const newEl = { id, type: tool, x1: x, y1: y, x2: x, y2: y, color, fill: fillColor, fillStyle, width, seed, points: [{ x, y }] };
+    currentElementRef.current = newEl;
     setCurrentElement(newEl);
   };
 
@@ -488,25 +490,23 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
         ws.send(JSON.stringify({ type: "cursor_move", payload: { x: vX, y: vY, color, laser: tool === 'laser' && isDrawing } }));
         
         // Broadcast live drawing progress to others without hitting the DB
-        if (isDrawing && currentElement && tool !== 'laser') {
-          const broadcastEl = tool === 'pencil' 
-            ? { ...currentElement, points: [...currentElement.points, {x: vX, y: vY}], x2: vX, y2: vY } 
-            : { ...currentElement, x2: vX, y2: vY };
-          ws.send(JSON.stringify({ type: "live_draw", payload: broadcastEl }));
+        if (isDrawing && currentElementRef.current && tool !== 'laser') {
+          ws.send(JSON.stringify({ type: "live_draw", payload: currentElementRef.current }));
         }
         
         lastCursorSyncRef.current = now;
       }
     }
 
-    if (!isDrawing || !currentElement) return;
+    if (!isDrawing || !currentElementRef.current) return;
 
     if (tool === 'pencil') {
-      const newPoints = [...currentElement.points, { x: vX, y: vY }];
-      setCurrentElement({ ...currentElement, points: newPoints, x2: vX, y2: vY });
+      const newPoints = [...currentElementRef.current.points, { x: vX, y: vY }];
+      currentElementRef.current = { ...currentElementRef.current, points: newPoints, x2: vX, y2: vY };
     } else if (tool !== 'laser') {
-      setCurrentElement({ ...currentElement, x2: vX, y2: vY });
+      currentElementRef.current = { ...currentElementRef.current, x2: vX, y2: vY };
     }
+    setCurrentElement(currentElementRef.current);
   };
 
   const handlePointerUp = () => {
@@ -524,16 +524,17 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
       return;
     }
 
-    if (!isDrawing || !currentElement) return;
+    if (!isDrawing || !currentElementRef.current) return;
     setIsDrawing(false);
     
     if (tool !== 'laser') {
-      addElement(currentElement);
+      addElement(currentElementRef.current);
       if (ws?.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify({ type: "draw_sync", payload: { ...currentElement, roughElement: null } }));
+        ws.send(JSON.stringify({ type: "draw_sync", payload: { ...currentElementRef.current, roughElement: null } }));
       }
     }
     
+    currentElementRef.current = null;
     setCurrentElement(null);
   };
 
