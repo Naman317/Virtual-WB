@@ -219,13 +219,16 @@ class RoomConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def grant_permission(self, room_slug, target_username, perm_type):
-        room = Room.objects.get(slug=room_slug)
-        participant = Participant.objects.get(user__username=target_username, room=room)
-        if perm_type == "draw":
-            participant.can_draw = True
-        elif perm_type == "chat":
-            participant.can_chat = True
-        participant.save()
+        try:
+            room = Room.objects.get(slug=room_slug)
+            participant = Participant.objects.get(user__username=target_username, room=room)
+            if perm_type == "draw":
+                participant.can_draw = True
+            elif perm_type == "chat":
+                participant.can_chat = True
+            participant.save()
+        except Exception as e:
+            print(f"Error granting permission: {e}")
 
     @database_sync_to_async
     def configure_chat_lock(self, room_slug, is_locked):
