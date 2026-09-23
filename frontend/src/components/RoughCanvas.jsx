@@ -24,6 +24,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
   } = useSceneStore();
 
   const [currentElement, setCurrentElement] = useState(null);
+  const [liveDraws, setLiveDraws] = useState({});
 
   // Dragging and Navigation States
   const [isDragging, setIsDragging] = useState(false);
@@ -194,6 +195,18 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
       }
     }
 
+    Object.values(liveDraws).forEach(el => {
+      if (el.type === 'text') {
+        context.font = `${el.width * 8 || 16}px 'Inter', sans-serif`;
+        context.fillStyle = el.color || '#FFFFFF';
+        context.textBaseline = 'top';
+        context.fillText(el.text || '', el.x1, el.y1);
+      } else {
+        const drawable = generateDrawable(el);
+        if (drawable) roughCanvas.draw(drawable);
+      }
+    });
+
     // Draw arrow heads for arrow elements
     elements.filter(el => el.type === 'arrow').forEach(el => {
       const angle = Math.atan2(el.y2 - el.y1, el.x2 - el.x1);
@@ -230,7 +243,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
     });
 
     context.restore();
-  }, [elements, currentElement, pan, zoom, selectedElementId, laserRedraw]);
+  }, [elements, currentElement, liveDraws, pan, zoom, selectedElementId, laserRedraw]);
 
   // WebSocket Sync
   useEffect(() => {
@@ -243,8 +256,19 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
         setPermissions({ roomLocked: data.payload.room.is_locked, chatLocked: data.payload.room.is_chat_locked });
       } else if (data.type === "draw_sync") {
         if (data.sender === username) return; // Don't duplicate own drawing
+        
+        // Remove from live draws if they were drawing it
+        setLiveDraws(prev => {
+          const next = { ...prev };
+          delete next[data.sender];
+          return next;
+        });
+
         const remoteEl = { ...data.payload, id: data.payload.id || data.payload.element_id };
         setElements([...useSceneStore.getState().elements.filter(el => el.id !== remoteEl.id), remoteEl]);
+      } else if (data.type === "live_draw") {
+        if (data.sender === username) return;
+        setLiveDraws(prev => ({ ...prev, [data.sender]: data.payload }));
       } else if (data.type === "cursor_move") {
         if (data.sender !== username) {
           setOtherCursors(prev => ({ ...prev, [data.sender]: data.payload }));
@@ -462,6 +486,15 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
       const now = performance.now();
       if (now - lastCursorSyncRef.current > 50) { // Limit to 20 updates a second
         ws.send(JSON.stringify({ type: "cursor_move", payload: { x: vX, y: vY, color, laser: tool === 'laser' && isDrawing } }));
+        
+        // Broadcast live drawing progress to others without hitting the DB
+        if (isDrawing && currentElement && tool !== 'laser') {
+          const broadcastEl = tool === 'pencil' 
+            ? { ...currentElement, points: [...currentElement.points, {x: vX, y: vY}], x2: vX, y2: vY } 
+            : { ...currentElement, x2: vX, y2: vY };
+          ws.send(JSON.stringify({ type: "live_draw", payload: broadcastEl }));
+        }
+        
         lastCursorSyncRef.current = now;
       }
     }

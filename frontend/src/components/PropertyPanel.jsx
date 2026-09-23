@@ -43,12 +43,12 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
             <label className="text-[10px] uppercase tracking-wider text-text-secondary font-bold">Fill</label>
             <div className="flex items-center gap-1">
               <button 
-                onClick={() => setFillStyle('hachure')} 
-                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'hachure' ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
+                onClick={() => { setFillStyle('hachure'); if (!fillColor) setFillColor(strokeColor); }} 
+                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'hachure' && fillColor ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
               >Sketch</button>
               <button 
-                onClick={() => setFillStyle('solid')} 
-                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'solid' ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
+                onClick={() => { setFillStyle('solid'); if (!fillColor) setFillColor(strokeColor); }} 
+                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'solid' && fillColor ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
               >Solid</button>
               <button onClick={() => setFillColor(null)} className="text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-white/50 hover:text-white ml-1">None</button>
             </div>
