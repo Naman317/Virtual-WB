@@ -4,6 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import Room, ChatMessage, Participant, BoardElement
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .serializers import BoardElementSerializer
 
@@ -224,8 +225,10 @@ class RoomConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def grant_permission(self, room_slug, target_username, perm_type):
         try:
+            User = get_user_model()
             room = Room.objects.get(slug=room_slug)
-            participant = Participant.objects.get(user__username=target_username, room=room)
+            target_user = User.objects.get(username=target_username)
+            participant, _ = Participant.objects.get_or_create(user=target_user, room=room)
             if perm_type == "draw":
                 participant.can_draw = True
             elif perm_type == "chat":
