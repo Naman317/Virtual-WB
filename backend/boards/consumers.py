@@ -30,32 +30,36 @@ class RoomConsumer(AsyncWebsocketConsumer):
             await self.close()
             return
 
-        await self.channel_layer.group_add(self.group_name, self.channel_name)
-        await self.accept()
+        try:
+            await self.channel_layer.group_add(self.group_name, self.channel_name)
+            await self.accept()
 
-        # 1. Send current board state to the new joiner
-        elements = await self.get_board_elements(self.room_slug)
-        await self.send(json.dumps({
-            "type": "init_state",
-            "payload": {
-                "elements": elements,
-                "room": {
-                    "is_locked": room.is_locked,
-                    "is_chat_locked": room.is_chat_locked
+            # 1. Send current board state to the new joiner
+            elements = await self.get_board_elements(self.room_slug)
+            await self.send(json.dumps({
+                "type": "init_state",
+                "payload": {
+                    "elements": elements,
+                    "room": {
+                        "is_locked": room.is_locked,
+                        "is_chat_locked": room.is_chat_locked
+                    }
                 }
-            }
-        }))
+            }))
 
-        # 2. Broadcast presence
-        await self.channel_layer.group_send(self.group_name, {
-            "type": "broadcast",
-            "message": {
-                "type": "presence", 
-                "action": "join", 
-                "user": self.user.username if self.user.is_authenticated else "anon", 
-                "ts": timezone.now().isoformat()
-            }
-        })
+            # 2. Broadcast presence
+            await self.channel_layer.group_send(self.group_name, {
+                "type": "broadcast",
+                "message": {
+                    "type": "presence", 
+                    "action": "join", 
+                    "user": self.user.username if self.user.is_authenticated else "anon", 
+                    "ts": timezone.now().isoformat()
+                }
+            })
+        except Exception as e:
+            print(f"WebSocket Connect Error: {e}")
+            await self.close()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
