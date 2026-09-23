@@ -109,8 +109,18 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Channels
 REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379")
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    },
-}
+if os.environ.get("USE_REDIS", "false").lower() == "true":
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [REDIS_URL],
+            },
+        },
+    }
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer",
+        },
+    }
