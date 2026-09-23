@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Virtual Whiteboard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="animate-fade-in">
+        <!-- Welcome Header -->
+        <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                Welcome, {{ user.username }}! 👋
+            </h1>
+            <p class="text-gray-600 text-lg">
+                You are logged in as a <span class="font-semibold text-indigo-600">{{ user.get_role_display }}</span>
+            </p>
+        </div>
+        
+        <!-- Actions Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% if user.is_teacher %}
+            <!-- Teacher Actions -->
+            <a href="{% url 'create_session' %}" class="group block bg-white rounded-lg shadow-lg hover:shadow-xl transition p-8 transform hover:scale-105">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Create New Session</h3>
+                        <p class="text-gray-600">Start a new whiteboard session for your students</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="{% url 'my_sessions' %}" class="group block bg-white rounded-lg shadow-lg hover:shadow-xl transition p-8 transform hover:scale-105">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">My Sessions</h3>
+                        <p class="text-gray-600">View and manage your created sessions</p>
+                    </div>
+                </div>
+            </a>
+            {% else %}
+            <!-- Student Actions -->
+            <a href="{% url 'join_session' %}" class="group block bg-white rounded-lg shadow-lg hover:shadow-xl transition p-8 transform hover:scale-105">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 gradient-bg rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Join Session</h3>
+                        <p class="text-gray-600">Enter a code to join a whiteboard session</p>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="{% url 'my_sessions' %}" class="group block bg-white rounded-lg shadow-lg hover:shadow-xl transition p-8 transform hover:scale-105">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">My Sessions</h3>
+                        <p class="text-gray-600">View sessions you've joined</p>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        </div>
+        
+        <!-- Feature Highlights -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Real-time Collaboration</h3>
+                    <p class="text-gray-600">Draw together with multiple users in real-time</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Drawing Tools</h3>
+                    <p class="text-gray-600">Pen, shapes, text, eraser, and more tools</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Save & Export</h3>
+                    <p class="text-gray-600">Export your whiteboard as PNG image</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
