@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+
+  web:
+    build: ./backend
+    command: daphne -b 0.0.0.0 -p 8000 project.asgi:application
+    volumes:
+      - ./backend:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - redis
