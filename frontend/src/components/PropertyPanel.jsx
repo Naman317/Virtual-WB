@@ -18,9 +18,11 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
 
   return (
     <motion.div
+      drag 
+      dragMomentum={false}
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="fixed left-24 bottom-10 p-4 glass rounded-2xl shadow-2xl z-40 w-56"
+      className="fixed left-24 bottom-10 p-4 glass rounded-2xl shadow-2xl z-40 w-56 cursor-grab active:cursor-grabbing"
     >
       <div className="mb-4">
         <label className="text-[10px] uppercase tracking-wider text-text-secondary font-bold mb-2 block">Stroke</label>

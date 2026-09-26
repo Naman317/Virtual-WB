@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, UserPlus, MoreHorizontal, Copy, Check } from 'lucide-react';
+import { Search, UserPlus, Copy, Check, MessageSquare, Lock, Shield, Move } from 'lucide-react';
 import { toast } from 'react-toastify';
 import useSceneStore from '../store/useSceneStore';
 
-export default function Header({ roomName, roomSlug, participants = [] }) {
+export default function Header({ roomName, roomSlug, participants = [], toggleChat }) {
   const role = localStorage.getItem("role");
   const [copied, setCopied] = useState(false);
   const [showInvite, setShowInvite] = useState(false);
-  const { otherCursors, setPan, zoom } = useSceneStore();
+  const [showMenu, setShowMenu] = useState(false);
+  const { otherCursors, setPan, zoom, viewLocked, setViewLocked } = useSceneStore();
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(roomSlug);
@@ -120,9 +121,23 @@ export default function Header({ roomName, roomSlug, participants = [] }) {
           </div>
         )}
 
-        <button className="p-2 rounded-lg hover:bg-white/5 text-content-secondary">
-          <MoreHorizontal size={20} />
-        </button>
+        <div className="flex items-center gap-1 border-l border-white/10 pl-3">
+          <button 
+            onClick={() => setViewLocked(!viewLocked)}
+            className={`p-2 rounded-lg transition ${viewLocked ? 'bg-accent-primary/20 text-accent-primary' : 'hover:bg-white/5 text-content-secondary'}`}
+            title={viewLocked ? "Unlock Viewport" : "Lock Viewport (Prevent Panning)"}
+          >
+            <Lock size={20} className={viewLocked ? 'opacity-50' : ''} />
+          </button>
+
+          <button 
+            onClick={toggleChat}
+            className="p-2 rounded-lg hover:bg-white/5 text-content-secondary"
+            title="Toggle Chat"
+          >
+            <MessageSquare size={20} />
+          </button>
+        </div>
       </div>
     </motion.header>
   );

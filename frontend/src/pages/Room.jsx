@@ -27,8 +27,9 @@ export default function Room() {
   const [fillColor, setFillColor] = useState(null);
   const [fillStyle, setFillStyle] = useState('hachure');
   const [strokeWidth, setStrokeWidth] = useState(2);
+  const [isChatOpen, setIsChatOpen] = useState(true);
   
-  const { clearElements, setPermissions } = useSceneStore();
+  const { clearElements, setPermissions, roomLocked } = useSceneStore();
   
   const role = localStorage.getItem("role");
   const username = localStorage.getItem("username");
@@ -162,6 +163,7 @@ export default function Room() {
         roomSlug={room.slug} 
         participants={participants} 
         onLogout={handleLogout}
+        toggleChat={() => setIsChatOpen(!isChatOpen)}
       />
       
       <div className="flex-1 flex overflow-hidden">
@@ -201,13 +203,16 @@ export default function Room() {
           />
         </main>
 
-        <aside className="w-80 border-l border-white/5 flex flex-col glass-dark">
-          <ChatPanel 
-            messages={messages} 
-            ws={wsRef.current}
-            onSendChat={(msg) => setMessages(prev => [...prev, msg])}
-          />
-        </aside>
+        {isChatOpen && (
+          <aside className="w-80 border-l border-white/5 flex flex-col glass-dark shrink-0 absolute right-0 top-0 bottom-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-xl md:relative md:bg-transparent">
+            <ChatPanel 
+              messages={messages} 
+              ws={wsRef.current}
+              onSendChat={(msg) => setMessages(prev => [...prev, msg])}
+              onClose={() => setIsChatOpen(false)}
+            />
+          </aside>
+        )}
       </div>
       
       <ToastContainer theme="dark" position="bottom-right" />

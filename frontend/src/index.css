@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 :root {
+  /* Default Dark Mode */
   --bg-main: #0B0B0F;
   --bg-sidebar: #13131A;
   --bg-panel: rgba(25, 25, 35, 0.7);
@@ -13,6 +14,17 @@
   --text-primary: #F3F4F6;
   --text-secondary: #9CA3AF;
   --border-color: rgba(255, 255, 255, 0.08);
+}
+
+.light {
+  --bg-main: #F9FAFB;
+  --bg-sidebar: #FFFFFF;
+  --bg-panel: rgba(255, 255, 255, 0.8);
+  --accent-primary: #4F46E5;
+  --accent-secondary: #7C3AED;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --border-color: rgba(0, 0, 0, 0.08);
 }
 
 body {
@@ -35,13 +47,13 @@ h1, h2, h3, h4, .heading {
 }
 
 .glass-dark {
-  background: rgba(10, 10, 15, 0.85);
+  background: var(--bg-panel);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
 }
 
 .sidebar-icon {
-  @apply w-10 h-10 flex items-center justify-center rounded-xl text-content-secondary hover:text-white hover:bg-white/5 transition-all duration-200 cursor-pointer;
+  @apply w-10 h-10 flex items-center justify-center rounded-xl text-content-secondary hover:text-content-primary hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 cursor-pointer;
 }
 
 .sidebar-icon.active {
@@ -49,7 +61,7 @@ h1, h2, h3, h4, .heading {
 }
 
 .toolbar-btn {
-  @apply p-2 rounded-lg text-content-secondary hover:text-white hover:bg-white/10 transition-all duration-200;
+  @apply p-2 rounded-lg text-content-secondary hover:text-content-primary hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-200;
 }
 
 .toolbar-btn.active {

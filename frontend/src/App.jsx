@@ -8,6 +8,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import Room from "./pages/Room";
 import { setAuthToken } from "./utils/api";
 
+import useSceneStore from "./store/useSceneStore";
+
 const isLoggedIn = () => !!localStorage.getItem("access_token");
 const getRole = () => localStorage.getItem("role");
 
@@ -15,6 +17,15 @@ export default function App() {
   const location = useLocation(); // Forces re-render on navigation
   const loggedIn = isLoggedIn();
   const role = getRole();
+  const theme = useSceneStore((state) => state.theme);
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+  }, [theme]);
 
   // ✅ Initialize auth token on app load to prevent 401 errors on refresh
   useEffect(() => {

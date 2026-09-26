@@ -289,6 +289,8 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
         setElements([]);
       } else if (data.type === "chat_lock_update") {
         setPermissions({ chatLocked: data.payload.locked });
+      } else if (data.type === "room_lock_update") {
+        setPermissions({ roomLocked: data.payload.locked });
       } else if (data.type === "element_delete") {
         if (data.sender === username) return;
         setElements(useSceneStore.getState().elements.filter(el => el.id !== data.payload.id));
@@ -343,6 +345,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
     if (!el) return;
     const handleWheel = (e) => {
       e.preventDefault();
+      if (useSceneStore.getState().viewLocked) return;
       if (e.ctrlKey) {
         setZoom(z => Math.min(Math.max(z - e.deltaY * 0.002, 0.1), 5));
       } else {
@@ -361,6 +364,7 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
 
   const handlePointerDown = (e) => {
     if (e.button === 1 || spacePressed) {
+      if (useSceneStore.getState().viewLocked) return;
       setIsPanning(true);
       setStartPan({ x: e.clientX - pan.x, y: e.clientY - pan.y });
       return;

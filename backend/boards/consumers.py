@@ -148,6 +148,22 @@ class RoomConsumer(AsyncWebsocketConsumer):
                 })
                 return
 
+            elif action == "lock_room":
+                await self.configure_room_lock(self.room_slug, True)
+                await self.channel_layer.group_send(self.group_name, {
+                    "type": "broadcast",
+                    "message": { "type": "room_lock_update", "payload": { "locked": True }, "sender": sender_name }
+                })
+                return
+            
+            elif action == "unlock_room":
+                await self.configure_room_lock(self.room_slug, False)
+                await self.channel_layer.group_send(self.group_name, {
+                    "type": "broadcast",
+                    "message": { "type": "room_lock_update", "payload": { "locked": False }, "sender": sender_name }
+                })
+                return
+
         elif msg_type == "element_delete":
             allowed = await self.can_user_do(self.user, self.room_slug, "draw")
             if not allowed: return
@@ -241,6 +257,12 @@ class RoomConsumer(AsyncWebsocketConsumer):
     def configure_chat_lock(self, room_slug, is_locked):
         room = Room.objects.get(slug=room_slug)
         room.is_chat_locked = is_locked
+        room.save()
+
+    @database_sync_to_async
+    def configure_room_lock(self, room_slug, is_locked):
+        room = Room.objects.get(slug=room_slug)
+        room.is_locked = is_locked
         room.save()
 
     @database_sync_to_async

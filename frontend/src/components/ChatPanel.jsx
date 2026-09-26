@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Lock, Hash, Hand, ChevronDown, Shield, Users } from 'lucide-react';
+import { Send, Lock, Hash, Hand, ChevronDown, Shield, Users, X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import useSceneStore from '../store/useSceneStore';
 
-export default function ChatPanel({ messages, ws, onSendChat }) {
+export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
   const [text, setText] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const scrollRef = useRef(null);
@@ -71,7 +71,14 @@ export default function ChatPanel({ messages, ws, onSendChat }) {
             <Hash size={18} className="text-accent-primary" />
             <h3 className="font-bold tracking-wide uppercase text-xs">Chat</h3>
         </div>
-        {(!canSendMessage()) && <Lock size={14} className="text-red-400/60" />}
+        <div className="flex items-center gap-2">
+          {(!canSendMessage()) && <Lock size={14} className="text-red-400/60" />}
+          {onClose && (
+            <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-md text-content-secondary">
+              <X size={16} />
+            </button>
+          )}
+        </div>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">

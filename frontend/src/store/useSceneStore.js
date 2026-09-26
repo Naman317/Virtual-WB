@@ -17,6 +17,14 @@ const useSceneStore = create((set, get) => ({
   zoom: 1,
   otherCursors: {},
   showGrid: true,
+  viewLocked: false,
+  theme: localStorage.getItem('theme') || 'dark',
+
+  toggleTheme: () => set((state) => {
+    const newTheme = state.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', newTheme);
+    return { theme: newTheme };
+  }),
 
   setPan: (panUpdate) => set((state) => ({ 
     pan: typeof panUpdate === 'function' ? panUpdate(state.pan) : panUpdate 
@@ -28,6 +36,7 @@ const useSceneStore = create((set, get) => ({
     otherCursors: typeof updater === 'function' ? updater(state.otherCursors) : updater
   })),
   setShowGrid: (showGrid) => set({ showGrid }),
+  setViewLocked: (viewLocked) => set({ viewLocked }),
 
   setElements: (elementsUpdate) => set((state) => ({ 
     elements: typeof elementsUpdate === 'function' ? elementsUpdate(state.elements) : elementsUpdate 

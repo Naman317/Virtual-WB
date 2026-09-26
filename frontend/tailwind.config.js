@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -7,15 +8,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        "bg-main": "#0B0B0F",
-        "bg-sidebar": "#13131A",
-        "accent-primary": "#6366F1",
-        "accent-secondary": "#8B5CF6",
-        "content-primary": "#F3F4F6",
-        "content-secondary": "#9CA3AF",
+        "bg-main": "var(--bg-main)",
+        "bg-sidebar": "var(--bg-sidebar)",
+        "accent-primary": "var(--accent-primary)",
+        "accent-secondary": "var(--accent-secondary)",
+        "content-primary": "var(--text-primary)",
+        "content-secondary": "var(--text-secondary)",
         // Aliases to support both naming conventions used across files
-        "text-primary": "#F3F4F6",
-        "text-secondary": "#9CA3AF",
+        "text-primary": "var(--text-primary)",
+        "text-secondary": "var(--text-secondary)",
       },
       fontFamily: {
         'outfit': ['Outfit', 'sans-serif'],

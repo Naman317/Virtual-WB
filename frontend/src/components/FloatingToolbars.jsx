@@ -44,9 +44,11 @@ export function MainToolbar({ selectedTool, setSelectedTool }) {
 
   return (
     <motion.div 
+      drag 
+      dragMomentum={false}
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="fixed top-24 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40"
+      className="fixed top-24 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40 cursor-grab active:cursor-grabbing"
     >
       {tools.filter(t => t.id !== 'laser' || role === 'teacher').map((tool) => (
         <button
@@ -128,9 +130,11 @@ export function ActionToolbar({ onClear, ws }) {
 
   return (
     <motion.div
+      drag 
+      dragMomentum={false}
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="fixed left-24 top-24 flex flex-col gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40"
+      className="fixed left-24 top-24 flex flex-col gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40 cursor-grab active:cursor-grabbing"
     >
       <button className="toolbar-btn" title="Download Image" onClick={handleExport}>
         <Download size={20} />
@@ -172,9 +176,11 @@ export function ZoomToolbar() {
 
   return (
     <motion.div
+      drag 
+      dragMomentum={false}
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="absolute bottom-6 left-6 flex items-center gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40 text-sm font-semibold"
+      className="absolute bottom-6 left-6 flex items-center gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40 text-sm font-semibold cursor-grab active:cursor-grabbing"
     >
       <button className="toolbar-btn text-content-secondary hover:text-white" onClick={handleZoomOut} title="Zoom Out">
         <Minus size={16} />
