@@ -35,11 +35,11 @@ export default function Dashboard() {
 
       <div className="panel p-4 rounded-xl">
         <h3 className="text-xl mb-3">Available Rooms</h3>
-        {!rooms ? <div className="animate-pulse space-y-2"><div className="h-4 bg-white/10 rounded w-3/4"></div><div className="h-4 bg-white/10 rounded w-1/2"></div></div> : (
+        {!rooms ? <div className="animate-pulse space-y-2"><div className="h-4 bg-black/10 dark:bg-white/10 rounded w-3/4"></div><div className="h-4 bg-black/10 dark:bg-white/10 rounded w-1/2"></div></div> : (
           <div className="space-y-2">
             {rooms.length === 0 && <div className="text-gray-400">No rooms yet</div>}
             {rooms.map(r => (
-              <div key={r.id} className="flex items-center justify-between p-3 bg-white/5 rounded">
+              <div key={r.id} className="flex items-center justify-between p-3 bg-black/5 dark:bg-white/5 rounded">
                 <div>
                   <div className="font-semibold">{r.name}</div>
                   <div className="text-xs text-gray-300">{r.slug}</div>
@@ -69,7 +69,7 @@ function CreateRoom({ onCreated }) {
   }
   return (
     <div className="space-y-3">
-      <input value={name} onChange={e=>setName(e.target.value)} placeholder="Room name" className="w-full p-2 rounded bg-white/5" />
+      <input value={name} onChange={e=>setName(e.target.value)} placeholder="Room name" className="w-full p-2 rounded bg-black/5 dark:bg-white/5" />
       <button disabled={!name || loading} onClick={create} className="px-4 py-2 bg-indigo-600 rounded">{loading? "Creating...":"Create Room"}</button>
     </div>
   );

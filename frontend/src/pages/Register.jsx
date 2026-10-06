@@ -50,7 +50,7 @@ export default function Register() {
            <div className="w-12 h-12 rounded-2xl bg-accent-secondary flex items-center justify-center text-white mb-4 shadow-lg shadow-accent-secondary/20">
               <UserPlus size={24} />
            </div>
-           <h2 className="text-3xl font-bold text-white tracking-tight">Create Account</h2>
+           <h2 className="text-3xl font-bold text-content-primary tracking-tight">Create Account</h2>
            <p className="text-content-secondary text-sm mt-2">Join the collaborative workspace</p>
         </div>
 
@@ -74,7 +74,7 @@ export default function Register() {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Your display name"
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
               />
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function Register() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Choose a username"
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
                 required
               />
             </div>
@@ -102,7 +102,7 @@ export default function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
                 required
               />
             </div>
@@ -115,7 +115,7 @@ export default function Register() {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none appearance-none cursor-pointer"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none appearance-none cursor-pointer"
               >
                 <option value="student" className="bg-bg-main">Student</option>
                 <option value="teacher" className="bg-bg-main">Teacher</option>

@@ -31,7 +31,7 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
             <button
               key={c.value}
               onClick={() => setStrokeColor(c.value)}
-              className={`w-6 h-6 rounded-md border-2 ${strokeColor === c.value ? 'border-white ring-1 ring-accent-primary' : 'border-white/10'}`}
+              className={`w-6 h-6 rounded-md border-2 ${strokeColor === c.value ? 'border-white ring-1 ring-accent-primary' : 'border-black/10 dark:border-white/10'}`}
               style={{ backgroundColor: c.value }}
               title={c.name}
             />
@@ -46,13 +46,13 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
             <div className="flex items-center gap-1">
               <button 
                 onClick={() => { setFillStyle('hachure'); if (!fillColor) setFillColor(strokeColor); }} 
-                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'hachure' && fillColor ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
+                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'hachure' && fillColor ? 'bg-accent-primary text-white' : 'bg-black/10 dark:bg-white/10 text-content-secondary hover:text-content-primary'}`}
               >Sketch</button>
               <button 
                 onClick={() => { setFillStyle('solid'); if (!fillColor) setFillColor(strokeColor); }} 
-                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'solid' && fillColor ? 'bg-accent-primary text-white' : 'bg-white/10 text-white/50 hover:text-white'}`}
+                className={`text-[9px] px-1.5 py-0.5 rounded ${fillStyle === 'solid' && fillColor ? 'bg-accent-primary text-white' : 'bg-black/10 dark:bg-white/10 text-content-secondary hover:text-content-primary'}`}
               >Solid</button>
-              <button onClick={() => setFillColor(null)} className="text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-white/50 hover:text-white ml-1">None</button>
+              <button onClick={() => setFillColor(null)} className="text-[9px] px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 text-content-primary/50 hover:text-content-primary ml-1">None</button>
             </div>
           </div>
           <div className="grid grid-cols-5 gap-2">
@@ -60,7 +60,7 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
               <button
                 key={c.value}
                 onClick={() => setFillColor(c.value)}
-                className={`w-6 h-6 rounded-md border-2 ${fillColor === c.value ? 'border-white ring-1 ring-accent-primary' : 'border-white/10'}`}
+                className={`w-6 h-6 rounded-md border-2 ${fillColor === c.value ? 'border-white ring-1 ring-accent-primary' : 'border-black/10 dark:border-white/10'}`}
                 style={{ backgroundColor: c.value }}
                 title={c.name}
               />
@@ -72,7 +72,7 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
       <div>
         <div className="flex justify-between items-center mb-2">
           <label className="text-[10px] uppercase tracking-wider text-text-secondary font-bold">Width</label>
-          <span className="text-[10px] text-text-primary px-1.5 py-0.5 bg-white/10 rounded">{strokeWidth}px</span>
+          <span className="text-[10px] text-text-primary px-1.5 py-0.5 bg-black/10 dark:bg-white/10 rounded">{strokeWidth}px</span>
         </div>
         <input 
           type="range" 
@@ -80,7 +80,7 @@ export default function PropertyPanel({ strokeColor, setStrokeColor, strokeWidth
           max="20" 
           value={strokeWidth} 
           onChange={(e) => setStrokeWidth(parseInt(e.target.value))}
-          className="w-full accent-accent-primary h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
+          className="w-full accent-accent-primary h-1 bg-black/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer"
         />
       </div>
     </motion.div>

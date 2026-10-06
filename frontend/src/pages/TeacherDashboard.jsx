@@ -51,20 +51,18 @@ export default function TeacherDashboard() {
   }, []);
 
   return (
-    <div className="flex h-screen bg-bg-main text-white overflow-hidden">
+    <div className="flex h-screen bg-bg-main text-content-primary overflow-hidden">
       <Sidebar onLogout={() => { setAuthToken(null); localStorage.clear(); navigate('/login'); }} />
 
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="h-20 flex items-center justify-between px-8 bg-transparent border-b border-white/5">
+        <header className="h-20 flex items-center justify-between px-8 bg-transparent border-b border-black/5 dark:border-white/5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight outfit">Dashboard</h2>
             <p className="text-xs text-content-secondary">Welcome back, <span className="text-accent-primary">{username}</span></p>
           </div>
           <div className="flex items-center gap-4">
-            <button className="p-2 rounded-full hover:bg-white/5 text-content-secondary transition">
-                <Users size={20} />
-            </button>
+            
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center font-bold text-white shadow-lg shadow-accent-primary/20">
                 {username ? username[0].toUpperCase() : 'T'}
             </div>
@@ -76,7 +74,7 @@ export default function TeacherDashboard() {
           <div className="max-w-6xl mx-auto">
             {/* Create Room Section */}
             <div className="mb-12">
-               <h3 className="text-lg font-semibold mb-4 text-white">Create New Project</h3>
+               <h3 className="text-lg font-semibold mb-4 text-content-primary">Create New Project</h3>
                <form onSubmit={createRoom} className="flex gap-3">
                   <div className="relative flex-1 max-w-md">
                      <PlusCircle className="absolute left-3 top-1/2 -translate-y-1/2 text-content-secondary" size={18} />
@@ -84,7 +82,7 @@ export default function TeacherDashboard() {
                         value={roomName}
                         onChange={(e) => setRoomName(e.target.value)}
                         placeholder="Ex: Weekly Design Review"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                        className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl py-3.5 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
                         required
                      />
                   </div>
@@ -97,13 +95,13 @@ export default function TeacherDashboard() {
 
             {/* List Section */}
             <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-semibold text-white">Your Workspaces</h3>
+                <h3 className="text-lg font-semibold text-content-primary">Your Workspaces</h3>
                 <span className="text-xs text-content-secondary">{rooms.length} Boards</span>
             </div>
 
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[1,2,3].map(i => <div key={i} className="h-48 rounded-3xl bg-white/5 animate-pulse"></div>)}
+                    {[1,2,3].map(i => <div key={i} className="h-48 rounded-3xl bg-black/5 dark:bg-white/5 animate-pulse"></div>)}
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -130,17 +128,17 @@ export default function TeacherDashboard() {
                                 
                                 <h4 className="text-lg font-bold mb-1 group-hover:text-accent-primary transition truncate">{r.name}</h4>
                                 <div className="flex items-center gap-2 text-xs text-content-secondary mb-6">
-                                    <span className="px-2 py-0.5 rounded bg-white/5 font-mono">Code: {r.slug}</span>
+                                    <span className="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 font-mono">Code: {r.slug}</span>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                                <div className="flex items-center justify-between pt-4 border-t border-black/5 dark:border-white/5">
                                     <div className="flex items-center gap-2 text-[10px] text-content-secondary uppercase tracking-widest font-bold">
                                         <Calendar size={12} />
                                         {(new Date(r.created_at)).toLocaleDateString()}
                                     </div>
                                     <button 
                                         onClick={() => navigate(`/room/${r.slug}`)}
-                                        className="px-4 py-2 rounded-xl bg-white/5 hover:bg-accent-primary text-white text-xs font-bold transition shadow-sm"
+                                        className="px-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 hover:bg-accent-primary text-content-primary hover:text-white text-xs font-bold transition shadow-sm"
                                     >
                                         Open
                                     </button>
@@ -150,7 +148,7 @@ export default function TeacherDashboard() {
                     </AnimatePresence>
                     
                     {rooms.length === 0 && (
-                        <div className="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                        <div className="col-span-full py-20 text-center border-2 border-dashed border-black/5 dark:border-white/5 rounded-3xl">
                             <p className="text-text-secondary">No boards yet. Create your first project above!</p>
                         </div>
                     )}

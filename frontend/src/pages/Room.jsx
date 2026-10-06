@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import api, { setAuthToken } from "../utils/api";
@@ -100,7 +100,7 @@ export default function Room() {
                   <div className="flex gap-2">
                     <button 
                       onClick={() => { approvePermission(data.payload?.user || data.sender, data.payload?.request); closeToast(); }}
-                      className="px-3 py-1.5 rounded-lg bg-green-500 hover:bg-green-600 text-white text-xs font-bold transition"
+                      className="px-3 py-1.5 rounded-lg bg-green-500 hover:bg-green-600 text-content-primary text-xs font-bold transition"
                     >
                       ✓ Grant
                     </button>
@@ -169,7 +169,7 @@ export default function Room() {
       <div className="flex-1 flex overflow-hidden">
         <Sidebar onLogout={handleLogout} />
         
-        <main className="flex-1 relative overflow-hidden bg-white/[0.02] rounded-tl-3xl border-l border-t border-white/5 shadow-2xl">
+        <main className="flex-1 relative overflow-hidden bg-black/[0.02] dark:bg-white/[0.02] rounded-tl-3xl border-l border-t border-black/5 dark:border-white/5 shadow-2xl">
           <RoughCanvas 
             ws={wsRef.current}
             tool={selectedTool}
@@ -204,7 +204,7 @@ export default function Room() {
         </main>
 
         {isChatOpen && (
-          <aside className="w-80 border-l border-white/5 flex flex-col glass-dark shrink-0 absolute right-0 top-0 bottom-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-xl md:relative md:bg-transparent">
+          <aside className="w-80 border-l border-black/5 dark:border-white/5 flex flex-col glass-dark shrink-0 absolute right-0 top-0 bottom-0 z-40 bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl md:relative md:bg-transparent">
             <ChatPanel 
               messages={messages} 
               ws={wsRef.current}
@@ -215,7 +215,7 @@ export default function Room() {
         )}
       </div>
       
-      <ToastContainer theme="dark" position="bottom-right" />
+      
     </div>
   );
 }

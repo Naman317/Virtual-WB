@@ -628,8 +628,8 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
             className="absolute pointer-events-none z-50 flex flex-col items-center"
             style={{ left: 0, top: 0 }}
           >
-            <MousePointer2 size={18} fill={pos.color || '#6366F1'} className="text-white drop-shadow-md" />
-            <span className="bg-white/10 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white border border-white/10 mt-1">
+            <MousePointer2 size={18} fill={pos.color || '#6366F1'} className="text-content-primary drop-shadow-md" />
+            <span className="bg-black/10 dark:bg-white/10 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-content-primary border border-black/10 dark:border-white/10 mt-1">
               {name}
             </span>
           </motion.div>
@@ -637,12 +637,12 @@ export default function RoughCanvas({ ws, tool, color, fillColor, fillStyle, wid
       </AnimatePresence>
 
       {(role === 'student' && !canDraw) && (
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-xl">
+        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 px-4 py-2 rounded-full backdrop-blur-md shadow-xl">
           <span className="text-sm font-semibold text-content-secondary">Read-Only Mode</span>
-          <div className="w-px h-4 bg-white/20"></div>
+          <div className="w-px h-4 bg-black/20 dark:bg-white/20"></div>
           <button
             onClick={requestPermission}
-            className="flex items-center gap-1.5 text-xs font-bold text-accent-primary hover:text-white transition"
+            className="flex items-center gap-1.5 text-xs font-bold text-accent-primary hover:text-content-primary transition"
           >
             <Hand size={14} /> Request Draw Access
           </button>

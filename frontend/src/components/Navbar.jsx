@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between bg-gray-900 text-white px-6 py-3 shadow-md">
+    <nav className="flex items-center justify-between bg-gray-900 text-content-primary px-6 py-3 shadow-md">
       <h1 className="text-xl font-semibold">Virtual Classroom</h1>
       <div className="flex items-center gap-4">
         {token ? (
@@ -23,7 +23,7 @@ export default function Navbar() {
             </span>
             <button
               onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+              className="bg-red-500 hover:bg-red-600 text-content-primary px-3 py-1 rounded"
             >
               Logout
             </button>

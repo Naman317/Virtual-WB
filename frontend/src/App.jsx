@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -20,10 +22,10 @@ export default function App() {
   const theme = useSceneStore((state) => state.theme);
 
   useEffect(() => {
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.remove('dark');
     }
   }, [theme]);
 
@@ -37,6 +39,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-bg-main antialiased">
+      <ToastContainer theme={theme} position="bottom-right" />
       {/* We removed the basic Navbar in favor of the specialized Dashboards and Room layouts */}
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -84,7 +87,7 @@ export default function App() {
         />
 
         <Route path="/room/:slug" element={<Room />} />
-        <Route path="*" element={<div className="p-8 text-white">404 Not Found</div>} />
+        <Route path="*" element={<div className="p-8 text-content-primary">404 Not Found</div>} />
       </Routes>
     </div>
   );

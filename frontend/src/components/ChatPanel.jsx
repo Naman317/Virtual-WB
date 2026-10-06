@@ -65,8 +65,8 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
   });
 
   return (
-    <div className="flex flex-col h-full bg-transparent text-white/90">
-      <div className="p-4 border-b border-white/5 flex items-center justify-between">
+    <div className="flex flex-col h-full bg-transparent text-content-primary/90">
+      <div className="p-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
         <div className="flex items-center gap-2">
             <Hash size={18} className="text-accent-primary" />
             <h3 className="font-bold tracking-wide uppercase text-xs">Chat</h3>
@@ -74,7 +74,7 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
         <div className="flex items-center gap-2">
           {(!canSendMessage()) && <Lock size={14} className="text-red-400/60" />}
           {onClose && (
-            <button onClick={onClose} className="p-1 hover:bg-white/10 rounded-md text-content-secondary">
+            <button onClick={onClose} className="p-1 hover:bg-black/10 dark:hover:bg-white/10 rounded-md text-content-secondary">
               <X size={16} />
             </button>
           )}
@@ -96,19 +96,19 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
               <div className="flex items-center gap-2 mb-1 px-1">
                 <span className="text-[10px] font-bold text-content-secondary uppercase tracking-wider">{m.sender}</span>
                 {m.payload?.role && (
-                  <span className={`text-[8px] px-1.5 py-0.5 rounded uppercase tracking-wider font-bold ${m.payload.role === 'teacher' ? 'bg-accent-primary/20 text-accent-primary' : 'bg-white/10 text-white/40'}`}>
+                  <span className={`text-[8px] px-1.5 py-0.5 rounded uppercase tracking-wider font-bold ${m.payload.role === 'teacher' ? 'bg-accent-primary/20 text-accent-primary' : 'bg-black/10 dark:bg-white/10 text-content-secondary'}`}>
                     {m.payload.role}
                   </span>
                 )}
                 {m.payload?.target === 'teacher' && (
                   <span className="text-[9px] px-1.5 py-0.5 rounded bg-accent-primary/20 text-accent-primary font-bold">DM</span>
                 )}
-                <span className="text-[9px] text-white/20">{m.ts ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                <span className="text-[9px] text-content-primary/20">{m.ts ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}</span>
               </div>
               <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
                 m.sender === username 
                   ? 'bg-accent-primary text-white rounded-tr-none' 
-                  : 'bg-white/5 border border-white/5 rounded-tl-none'
+                  : 'bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-tl-none'
               }`}>
                 {m.payload?.message || m.content}
               </div>
@@ -117,13 +117,13 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
         </AnimatePresence>
       </div>
 
-      <div className="p-3 bg-white/[0.02] border-t border-white/5">
+      <div className="p-3 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/5 dark:border-white/5">
         {/* Target selector dropdown (Teacher only) */}
         {role === 'teacher' && (
         <div className="relative mb-2">
           <button 
             onClick={() => setShowDropdown(!showDropdown)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-medium text-content-secondary hover:text-white transition w-full"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-xs font-medium text-content-secondary hover:text-content-primary transition w-full"
           >
             {!chatLocked ? (
               <><Users size={12} /> Everyone</>
@@ -143,13 +143,13 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
               >
                 <button 
                   onClick={() => toggleChatLock(false)}
-                  className={`flex items-center gap-2 px-3 py-2.5 text-xs font-medium w-full hover:bg-white/5 transition ${!chatLocked ? 'text-accent-primary' : 'text-content-secondary'}`}
+                  className={`flex items-center gap-2 px-3 py-2.5 text-xs font-medium w-full hover:bg-black/5 dark:hover:bg-white/5 transition ${!chatLocked ? 'text-accent-primary' : 'text-content-secondary'}`}
                 >
                   <Users size={12} /> Everyone
                 </button>
                 <button 
                   onClick={() => toggleChatLock(true)}
-                  className={`flex items-center gap-2 px-3 py-2.5 text-xs font-medium w-full hover:bg-white/5 transition ${chatLocked ? 'text-accent-primary' : 'text-content-secondary'}`}
+                  className={`flex items-center gap-2 px-3 py-2.5 text-xs font-medium w-full hover:bg-black/5 dark:hover:bg-white/5 transition ${chatLocked ? 'text-accent-primary' : 'text-content-secondary'}`}
                 >
                   <Shield size={12} /> Teacher Only
                 </button>
@@ -165,12 +165,12 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Type a message..."
-                    className="w-full bg-white/5 border border-white/5 focus:border-accent-primary/50 focus:bg-white/10 rounded-xl py-3 pl-4 pr-12 text-sm transition-all outline-none"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 focus:border-accent-primary/50 focus:bg-black/10 dark:focus:bg-white/10 rounded-xl py-3 pl-4 pr-12 text-sm transition-all outline-none"
                 />
                 <button
                     type="submit"
                     disabled={!text.trim()}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-accent-primary/10 text-accent-primary hover:bg-accent-primary hover:text-white transition-all disabled:opacity-30"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-accent-primary/10 text-accent-primary hover:bg-accent-primary hover:text-content-primary transition-all disabled:opacity-30"
                 >
                     <Send size={18} />
                 </button>
@@ -178,7 +178,7 @@ export default function ChatPanel({ messages, ws, onSendChat, onClose }) {
         ) : (
             <button 
                 onClick={requestPermission}
-                className="w-full py-3 rounded-xl bg-white/5 border border-white/5 hover:border-accent-primary/30 text-content-secondary hover:text-white text-xs font-bold transition flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 hover:border-accent-primary/30 text-content-secondary hover:text-content-primary text-xs font-bold transition flex items-center justify-center gap-2"
             >
                 <Hand size={14} />
                 Request Chat Access

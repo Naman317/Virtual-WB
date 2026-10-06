@@ -139,7 +139,7 @@ export function ActionToolbar({ onClear, ws }) {
       <button className="toolbar-btn" title="Download Image" onClick={handleExport}>
         <Download size={20} />
       </button>
-      <div className="h-px bg-white/5 my-1 mx-1"></div>
+      <div className="h-px bg-black/5 dark:bg-white/5 my-1 mx-1"></div>
       <button 
         className="toolbar-btn disabled:opacity-30" 
         onClick={handleUndo} 
@@ -156,7 +156,7 @@ export function ActionToolbar({ onClear, ws }) {
       >
         <Redo2 size={20} />
       </button>
-      <div className="h-px bg-white/5 my-1 mx-1"></div>
+      <div className="h-px bg-black/5 dark:bg-white/5 my-1 mx-1"></div>
       <button className="toolbar-btn text-red-400 hover:bg-red-400/10" onClick={handleClear} title="Clear Board">
         <Trash2 size={20} />
       </button>
@@ -182,13 +182,13 @@ export function ZoomToolbar() {
       animate={{ y: 0, opacity: 1 }}
       className="absolute bottom-6 left-6 flex items-center gap-1 p-1.5 glass rounded-2xl shadow-2xl z-40 text-sm font-semibold cursor-grab active:cursor-grabbing"
     >
-      <button className="toolbar-btn text-content-secondary hover:text-white" onClick={handleZoomOut} title="Zoom Out">
+      <button className="toolbar-btn text-content-secondary hover:text-content-primary" onClick={handleZoomOut} title="Zoom Out">
         <Minus size={16} />
       </button>
-      <button className="px-2 font-mono text-xs w-14 text-center cursor-pointer hover:text-white transition" title="Reset View" onClick={handleReset}>
+      <button className="px-2 font-mono text-xs w-14 text-center cursor-pointer hover:text-content-primary transition" title="Reset View" onClick={handleReset}>
         {Math.round(zoom * 100)}%
       </button>
-      <button className="toolbar-btn text-content-secondary hover:text-white" onClick={handleZoomIn} title="Zoom In">
+      <button className="toolbar-btn text-content-secondary hover:text-content-primary" onClick={handleZoomIn} title="Zoom In">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
       </button>
     </motion.div>

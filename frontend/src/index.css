@@ -5,26 +5,29 @@
 @tailwind utilities;
 
 :root {
-  /* Default Dark Mode */
-  --bg-main: #0B0B0F;
-  --bg-sidebar: #13131A;
-  --bg-panel: rgba(25, 25, 35, 0.7);
-  --accent-primary: #6366F1;
-  --accent-secondary: #8B5CF6;
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --border-color: rgba(255, 255, 255, 0.08);
-}
-
-.light {
+  /* Default Light Mode */
   --bg-main: #F9FAFB;
   --bg-sidebar: #FFFFFF;
   --bg-panel: rgba(255, 255, 255, 0.8);
   --accent-primary: #4F46E5;
+  --accent-primary-transparent: rgba(79, 70, 229, 0.1);
   --accent-secondary: #7C3AED;
   --text-primary: #111827;
   --text-secondary: #4B5563;
   --border-color: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode */
+  --bg-main: #0B0B0F;
+  --bg-sidebar: #13131A;
+  --bg-panel: rgba(25, 25, 35, 0.7);
+  --accent-primary: #6366F1;
+  --accent-primary-transparent: rgba(99, 102, 241, 0.1);
+  --accent-secondary: #8B5CF6;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --border-color: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -57,7 +60,8 @@ h1, h2, h3, h4, .heading {
 }
 
 .sidebar-icon.active {
-  @apply text-accent-primary bg-accent-primary/10;
+  @apply text-accent-primary;
+  background-color: var(--accent-primary-transparent);
 }
 
 .toolbar-btn {
@@ -76,9 +80,9 @@ h1, h2, h3, h4, .heading {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border-color);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(128, 128, 128, 0.4);
 }

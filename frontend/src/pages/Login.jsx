@@ -66,7 +66,7 @@ export default function Login() {
            <div className="w-12 h-12 rounded-2xl bg-accent-primary flex items-center justify-center text-white mb-4 shadow-lg shadow-accent-primary/20">
               <LogIn size={24} />
            </div>
-           <h2 className="text-3xl font-bold text-white tracking-tight">Welcome Back</h2>
+           <h2 className="text-3xl font-bold text-content-primary tracking-tight">Welcome Back</h2>
            <p className="text-text-secondary text-sm mt-2">Sign in to your collaborative workspace</p>
         </div>
 
@@ -91,7 +91,7 @@ export default function Login() {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
                 placeholder="Enter your username"
                 required
               />
@@ -107,7 +107,7 @@ export default function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full bg-white/5 border border-white/5 rounded-xl py-3 pl-10 pr-4 text-white focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl py-3 pl-10 pr-4 text-content-primary focus:bg-black/10 dark:focus:bg-white/10 focus:border-accent-primary/50 transition-all outline-none"
                 placeholder="••••••••"
                 required
               />

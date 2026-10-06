@@ -18,7 +18,7 @@ export default function TeacherControls({ wsUrl, onSaved }) {
       <button className="w-full py-2 rounded bg-green-600" onClick={() => sendControl("unlock")}>Unlock Board</button>
 
       <div className="flex gap-2">
-        <input id="kickname" placeholder="display name to kick" className="flex-1 p-2 rounded bg-white/5" />
+        <input id="kickname" placeholder="display name to kick" className="flex-1 p-2 rounded bg-black/5 dark:bg-white/5" />
         <button onClick={() => {
           const t = document.getElementById("kickname").value;
           if (!t) return alert("enter name");

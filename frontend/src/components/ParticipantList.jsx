@@ -16,9 +16,9 @@ export default function ParticipantList() {
           <motion.div key={p.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
             className="flex items-center justify-between p-2 rounded bg-white/4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center">{p.name[0]}</div>
+              <div className="w-10 h-10 rounded-full bg-indigo-500 text-content-primary flex items-center justify-center">{p.name[0]}</div>
               <div>
-                <div className="text-white font-medium">{p.name}</div>
+                <div className="text-content-primary font-medium">{p.name}</div>
                 <div className="text-xs text-gray-300">{p.role}</div>
               </div>
             </div>
