@@ -60,12 +60,14 @@ class ChatViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+from django.http import JsonResponse
+
 @api_view(['GET'])
 @permission_classes([])
 def health_check(request):
     try:
         # Check database connection to keep Supabase awake
         room_count = Room.objects.count()
-        return Response({"status": "healthy", "db_status": "connected", "room_count": room_count}, status=200)
+        return JsonResponse({"status": "healthy", "db_status": "connected", "room_count": room_count}, status=200)
     except Exception as e:
-        return Response({"status": "unhealthy", "error": str(e)}, status=500)
+        return JsonResponse({"status": "unhealthy", "error": str(e)}, status=500)
